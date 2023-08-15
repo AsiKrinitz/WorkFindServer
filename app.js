@@ -74,7 +74,7 @@ app.post("/api/resume", async (req, res) => {
     console.log(resume);
 
     let result = await addResume(resume);
-    let message = "Job added successfully!";
+    let message = "Resume added successfully!";
     res.send({ message, result });
 
     console.log(result);
@@ -103,8 +103,14 @@ app.get("/api/getAllResumesFiltered", async (req, res) => {
 // check if email already exists in a resume
 app.get("/api/checkExistingResume", async (req, res) => {
   const userEmail = req.query.userEmail;
+  console.log(userEmail);
   const existingResume = await findResumeByEmail(userEmail);
-  res.send(existingResume);
+
+  if (existingResume == null) {
+    res.send(false);
+  } else {
+    res.send(existingResume);
+  }
 });
 
 // Start the server

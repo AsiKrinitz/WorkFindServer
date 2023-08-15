@@ -38,7 +38,11 @@ export const getAllResumesFiltered = async (userEmail) => {
 export const findResumeByEmail = async (userEmail) => {
   try {
     const resume = await resumeModel.findOne({ userEmail });
-    return resume;
+    if (resume == null) {
+      return null;
+    } else {
+      return resume;
+    }
   } catch (error) {
     console.error(error);
     throw error;
