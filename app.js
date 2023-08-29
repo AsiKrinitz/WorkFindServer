@@ -8,6 +8,8 @@ import {
   findResumeByEmail,
 } from "./resumeService.js";
 
+import mongoose from "mongoose";
+
 const app = express();
 const port = 3000;
 
@@ -16,8 +18,6 @@ app.use(cors());
 
 // middleware to parse json data. by default express does not parse json data
 app.use(express.json());
-
-import mongoose from "mongoose";
 
 // Connect to MongoDB
 mongoose
