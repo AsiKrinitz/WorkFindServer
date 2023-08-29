@@ -29,6 +29,11 @@ mongoose
     console.log("Error connecting to MongoDB", error);
   });
 
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
+
 // Define a route
 //http://localhost:3000
 app.get("/", (req, res) => {
@@ -113,7 +118,11 @@ app.get("/api/checkExistingResume", async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+// Update the route to handle POST requests and send a response
+app.post("/api/SubmitToJob", async (req, res) => {
+  console.log(req.body);
+
+  // Process the data and send a response
+  const responseData = { message: "Job submission successful" };
+  res.status(200).json(responseData);
 });
