@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { addJob, getJobs } from "./jobService.js";
+import { addJob, getJobs, submitToJob, deleteJob } from "./jobService.js";
 import {
   addResume,
   getAllResumes,
@@ -118,11 +118,32 @@ app.get("/api/checkExistingResume", async (req, res) => {
   }
 });
 
-// Update the route to handle POST requests and send a response
-app.post("/api/SubmitToJob", async (req, res) => {
-  console.log(req.body);
+// Submit user to job !
+app.get("/api/SubmitToJob", async (req, res) => {
+  let userEmail = req.query.email; // Get the email from the query parameter
+  let jobId = req.query.jobId;
 
-  // Process the data and send a response
-  const responseData = { message: "Job submission successful" };
-  res.status(200).json(responseData);
+  // console.log(userEmail + jobId);
+
+  const jobDetails = await submitToJob(userEmail, jobId);
+
+  console.log(jobDetails);
+
+  if (jobDetails) {
+    res.send(true);
+    // res.status(200).json(jobDetails); // Send job details if found
+  } else {
+    res.send(false);
+    // res.status(404).json({ error: "Job not found" });
+  }
+});
+
+app.delete("/api/DeleteJob", async (req, res) => {
+  const jobId = req.query.jobId;
+
+  const result = await deleteJob(jobId);
+
+  console.log(result);
+
+  res.send(result);
 });
