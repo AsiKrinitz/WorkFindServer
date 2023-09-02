@@ -93,3 +93,31 @@ export const deleteJob = async (jobId) => {
     return { error: "Server error" };
   }
 };
+
+// get a job by his Id
+export const getJobById = async (jobId) => {
+  try {
+    const job = await jobModel.findById(jobId);
+
+    return job;
+  } catch (error) {
+    console.error(error);
+    throw error; // You can handle the error at a higher level
+  }
+};
+
+// Function to update a job by its Id
+export const updateJob = async (jobId, updatedJobData) => {
+  try {
+    const result = await jobModel.findByIdAndUpdate(jobId, updatedJobData);
+
+    if (!result) {
+      return { error: "Job not found" };
+    } else {
+      return { message: "Job updated successfully" };
+    }
+  } catch (error) {
+    console.error(error);
+    throw error; // You can handle the error at a higher level
+  }
+};

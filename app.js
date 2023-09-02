@@ -1,6 +1,13 @@
 import express from "express";
 import cors from "cors";
-import { addJob, getJobs, submitToJob, deleteJob } from "./jobService.js";
+import {
+  addJob,
+  getJobs,
+  submitToJob,
+  deleteJob,
+  getJobById,
+  updateJob,
+} from "./jobService.js";
 import {
   addResume,
   getAllResumes,
@@ -138,6 +145,7 @@ app.get("/api/SubmitToJob", async (req, res) => {
   }
 });
 
+// handle the delete job function
 app.delete("/api/DeleteJob", async (req, res) => {
   const jobId = req.query.jobId;
 
@@ -146,4 +154,44 @@ app.delete("/api/DeleteJob", async (req, res) => {
   console.log(result);
 
   res.send(result);
+});
+
+// get a job details by jobId
+app.get("/api/GetJob", async (req, res) => {
+  const jobId = req.query.jobId;
+
+  try {
+    const job = await getJobById(jobId);
+
+    if (!job) {
+      res.send(false);
+    } else {
+      res.json(job);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// update job
+app.put("/api/UpdateJob/:jobId", async (req, res) => {
+  const jobId = req.params.jobId; // Extract the jobId from the URL parameter
+  const updatedJobData = req.body; // This should contain the updated job data
+
+  console.log(jobId);
+  console.log(updatedJobData);
+
+  try {
+    const result = await updateJob(jobId, updatedJobData);
+
+    if (!result.error) {
+      res.json({ message: "Job updated successfully" });
+    } else {
+      res.status(404).json({ error: "Job not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
 });
