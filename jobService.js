@@ -93,28 +93,3 @@ export const deleteJob = async (jobId) => {
     return { error: "Server error" };
   }
 };
-
-export const getJobByIdFromDatabase = async (jobId) => {
-  try {
-    const job = await jobModel.findById(jobId);
-    return job;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-export const updateJobByIdInDatabase = async (jobId, updatedJobData) => {
-  try {
-    // Perform the database update (e.g., using Mongoose)
-    const updatedJob = await jobModel.findByIdAndUpdate(jobId, updatedJobData, {
-      new: true, // Return the updated job
-      runValidators: true, // Run model validators
-    });
-
-    return updatedJob;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
