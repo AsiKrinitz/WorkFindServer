@@ -10,7 +10,7 @@ export const resumeSchema = new mongoose.Schema({
   userLanguages: [String],
   userExperience: String,
   userDescription: String,
-  userSkillz: String,
+  userSkills: String,
   lastEdit: Date,
 });
 
@@ -43,6 +43,44 @@ export const findResumeByEmail = async (userEmail) => {
     } else {
       return resume;
     }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// edit existing resume by email
+export const updateResumeByEmail = async (userEmail, updatedData) => {
+  try {
+    // Find the document to update
+    const resumeToUpdate = await resumeModel.findOne({ userEmail });
+
+    if (!resumeToUpdate) {
+      // Handle case where the document with the specified email is not found
+      return null;
+    }
+
+    // Update the fields in the document
+    resumeToUpdate.set(updatedData);
+
+    // Update the lastEdit field to the current date and time
+    resumeToUpdate.lastEdit = new Date();
+
+    // Save the updated document
+    const updatedResume = await resumeToUpdate.save();
+
+    return updatedResume;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// delete resume by email
+export const deleteResumeByEmail = async (userEmail) => {
+  try {
+    const deletedResume = await resumeModel.findOneAndDelete({ userEmail });
+    return deletedResume;
   } catch (error) {
     console.error(error);
     throw error;
