@@ -1,6 +1,18 @@
 import express from "express";
 import cors from "cors";
-import { addJob, getJobs, submitToJob, deleteJob } from "./jobService.js";
+import {
+  addJob,
+  getJobs,
+  submitToJob,
+  deleteJob,
+<<<<<<< HEAD
+  getJobByIdFromDatabase,
+  updateJobByIdInDatabase,
+=======
+  getJobById,
+  updateJob,
+>>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
+} from "./jobService.js";
 import {
   addResume,
   getAllResumes,
@@ -140,6 +152,11 @@ app.get("/api/SubmitToJob", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+// delete the job from the JobDetails Collection
+=======
+// handle the delete job function
+>>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
 app.delete("/api/DeleteJob", async (req, res) => {
   const jobId = req.query.jobId;
 
@@ -148,4 +165,117 @@ app.delete("/api/DeleteJob", async (req, res) => {
   console.log(result);
 
   res.send(result);
+});
+
+<<<<<<< HEAD
+// edit existing resume
+app.put("/api/editResume", async (req, res) => {
+  const updatedData = req.body; // Data to update in the resume
+  let userEmail = updatedData.userEmail;
+
+  console.log(updatedData);
+  console.log(userEmail);
+
+  try {
+    const updatedResume = await updateResumeByEmail(userEmail, updatedData);
+    res.send(updatedResume);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating the resume.");
+  }
+});
+
+// Delete a resume by email
+app.delete("/api/deleteResume/:userEmail", async (req, res) => {
+  const userEmail = req.params.userEmail; // Access the userEmail from the route parameter
+
+  try {
+    const deletedResume = await deleteResumeByEmail(userEmail);
+    if (deletedResume != null) {
+      console.log(deletedResume);
+      res.send({ message: "Resume deleted successfully" });
+    } else {
+      res.status(404).send({ message: "Resume not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting the resume.");
+  }
+});
+
+// Get a job by its ID
+app.get("/api/GetJob/:jobId", async (req, res) => {
+  const jobId = req.params.jobId;
+  console.log(jobId);
+
+  try {
+    // Fetch the job by its ID (you can replace this with your actual database query)
+    const job = await getJobByIdFromDatabase(jobId);
+
+    if (!job) {
+      res.status(404).json({ message: "Job not found" });
+=======
+// get a job details by jobId
+app.get("/api/GetJob", async (req, res) => {
+  const jobId = req.query.jobId;
+
+  try {
+    const job = await getJobById(jobId);
+
+    if (!job) {
+      res.send(false);
+>>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
+    } else {
+      res.json(job);
+    }
+  } catch (error) {
+    console.error(error);
+<<<<<<< HEAD
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Update a job by its ID
+app.put("/api/UpdateJob/:jobId", async (req, res) => {
+  const jobId = req.params.jobId;
+  const updatedJobData = req.body;
+
+  try {
+    // Update the job by its ID (replace this with your actual database update logic)
+    const updatedJob = await updateJobByIdInDatabase(jobId, updatedJobData);
+
+    if (!updatedJob) {
+      res.status(404).json({ message: "Job not found" });
+    } else {
+      res.json(updatedJob);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+=======
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// update job
+app.put("/api/UpdateJob/:jobId", async (req, res) => {
+  const jobId = req.params.jobId; // Extract the jobId from the URL parameter
+  const updatedJobData = req.body; // This should contain the updated job data
+
+  console.log(jobId);
+  console.log(updatedJobData);
+
+  try {
+    const result = await updateJob(jobId, updatedJobData);
+
+    if (!result.error) {
+      res.json({ message: "Job updated successfully" });
+    } else {
+      res.status(404).json({ error: "Job not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+>>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
+  }
 });
