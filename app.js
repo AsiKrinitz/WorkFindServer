@@ -5,13 +5,8 @@ import {
   getJobs,
   submitToJob,
   deleteJob,
-<<<<<<< HEAD
   getJobByIdFromDatabase,
   updateJobByIdInDatabase,
-=======
-  getJobById,
-  updateJob,
->>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
 } from "./jobService.js";
 import {
   addResume,
@@ -152,11 +147,7 @@ app.get("/api/SubmitToJob", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 // delete the job from the JobDetails Collection
-=======
-// handle the delete job function
->>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
 app.delete("/api/DeleteJob", async (req, res) => {
   const jobId = req.query.jobId;
 
@@ -167,7 +158,6 @@ app.delete("/api/DeleteJob", async (req, res) => {
   res.send(result);
 });
 
-<<<<<<< HEAD
 // edit existing resume
 app.put("/api/editResume", async (req, res) => {
   const updatedData = req.body; // Data to update in the resume
@@ -214,23 +204,11 @@ app.get("/api/GetJob/:jobId", async (req, res) => {
 
     if (!job) {
       res.status(404).json({ message: "Job not found" });
-=======
-// get a job details by jobId
-app.get("/api/GetJob", async (req, res) => {
-  const jobId = req.query.jobId;
-
-  try {
-    const job = await getJobById(jobId);
-
-    if (!job) {
-      res.send(false);
->>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
     } else {
       res.json(job);
     }
   } catch (error) {
     console.error(error);
-<<<<<<< HEAD
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -252,30 +230,5 @@ app.put("/api/UpdateJob/:jobId", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
-=======
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-// update job
-app.put("/api/UpdateJob/:jobId", async (req, res) => {
-  const jobId = req.params.jobId; // Extract the jobId from the URL parameter
-  const updatedJobData = req.body; // This should contain the updated job data
-
-  console.log(jobId);
-  console.log(updatedJobData);
-
-  try {
-    const result = await updateJob(jobId, updatedJobData);
-
-    if (!result.error) {
-      res.json({ message: "Job updated successfully" });
-    } else {
-      res.status(404).json({ error: "Job not found" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
->>>>>>> 92dd2c8b2ef623ee1ae7493d70ec66483e24ff75
   }
 });
