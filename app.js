@@ -117,7 +117,7 @@ app.get("/api/getAllResumesFiltered", async (req, res) => {
 // check if email already exists in a resume
 app.get("/api/checkExistingResume", async (req, res) => {
   const userEmail = req.query.userEmail;
-  console.log(userEmail);
+  console.log("the user email is: " + userEmail);
   const existingResume = await findResumeByEmail(userEmail);
 
   if (existingResume == null) {
