@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 export const resumeSchema = new mongoose.Schema({
   userFullName: String,
+  userFirstName: String,
+  userLastName: String,
   userEmail: String,
   userPhone: String,
   userCity: String,

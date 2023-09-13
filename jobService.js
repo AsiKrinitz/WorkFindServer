@@ -12,7 +12,7 @@ export const jobSchema = new mongoose.Schema({
   jobOwner: String,
   jobDate: Date,
   experienceRequired: Boolean,
-  isApplied: Boolean,
+  jobType: String,
   appliedRequests: [String],
 });
 
