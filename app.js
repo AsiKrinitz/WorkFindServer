@@ -30,7 +30,7 @@ app.use(express.json());
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb://127.0.0.1:27017/Jobs")
+  .connect("mongodb://127.0.0.1:27017/JobQuestDB")
   .then(() => {
     console.log("Connected to MongoDB from the mongoDb file");
   })
