@@ -121,7 +121,7 @@ app.get("/api/checkExistingResume", async (req, res) => {
   const existingResume = await findResumeByEmail(userEmail);
 
   if (existingResume == null) {
-    res.send(false);
+    res.send(null);
   } else {
     res.send(existingResume);
   }
