@@ -1,12 +1,14 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
 import {
   addJob,
   getJobs,
   submitToJob,
   deleteJob,
-  getJobByIdFromDatabase,
+  getJobById,
   updateJobByIdInDatabase,
+  countUserJobs,
 } from "./jobService.js";
 import {
   addResume,
@@ -16,8 +18,6 @@ import {
   updateResumeByEmail,
   deleteResumeByEmail,
 } from "./resumeService.js";
-
-import mongoose from "mongoose";
 
 const app = express();
 const port = 3000;
@@ -200,7 +200,7 @@ app.get("/api/GetJob/:jobId", async (req, res) => {
 
   try {
     // Fetch the job by its ID (you can replace this with your actual database query)
-    const job = await getJobByIdFromDatabase(jobId);
+    const job = await getJobById(jobId);
 
     if (!job) {
       res.status(404).json({ message: "Job not found" });
@@ -219,7 +219,7 @@ app.put("/api/UpdateJob/:jobId", async (req, res) => {
   const updatedJobData = req.body;
 
   try {
-    // Update the job by its ID (replace this with your actual database update logic)
+    // Update the job by its ID
     const updatedJob = await updateJobByIdInDatabase(jobId, updatedJobData);
 
     if (!updatedJob) {
@@ -230,5 +230,17 @@ app.put("/api/UpdateJob/:jobId", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// count how many jobs wach user got
+app.get("/api/countUserJobs/:userEmail", async (req, res) => {
+  try {
+    const userEmail = req.params.userEmail;
+    const jobCount = await countUserJobs(userEmail);
+    res.send({ jobCount });
+  } catch (err) {
+    console.log("Error occurred: " + err);
+    res.status(500).send({ message: "An error occurred." });
   }
 });

@@ -94,16 +94,6 @@ export const deleteJob = async (jobId) => {
   }
 };
 
-export const getJobByIdFromDatabase = async (jobId) => {
-  try {
-    const job = await jobModel.findById(jobId);
-    return job;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
 export const updateJobByIdInDatabase = async (jobId, updatedJobData) => {
   try {
     // Perform the database update (e.g., using Mongoose)
@@ -127,7 +117,7 @@ export const getJobById = async (jobId) => {
     return job;
   } catch (error) {
     console.error(error);
-    throw error; // You can handle the error at a higher level
+    throw error;
   }
 };
 
@@ -144,5 +134,16 @@ export const updateJob = async (jobId, updatedJobData) => {
   } catch (error) {
     console.error(error);
     throw error; // You can handle the error at a higher level
+  }
+};
+
+// Function to count jobs owned by a user
+export const countUserJobs = async (userEmail) => {
+  try {
+    const jobCount = await jobModel.countDocuments({ jobOwner: userEmail });
+    return jobCount;
+  } catch (err) {
+    console.error("Error counting user jobs: " + err);
+    throw err;
   }
 };
