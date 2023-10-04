@@ -44,7 +44,7 @@ app.listen(port, () => {
 });
 
 // Define a route
-//http://localhost:3000
+// http://localhost:3000
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
@@ -240,6 +240,38 @@ app.get("/api/countUserJobs/:userEmail", async (req, res) => {
     const jobCount = await countUserJobs(userEmail);
     res.send({ jobCount });
   } catch (err) {
+    console.log("Error occurred: " + err);
+    res.status(500).send({ message: "An error occurred." });
+  }
+});
+
+// exapmle with using URL params
+// looks like this - (/api/getRoles/12345)
+app.get("/api/getRolesUrlParams/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId; // Access userId from the URL parameter
+    console.log(userId);
+    res.send(true);
+  } catch (err) {
+    console.log("Error occurred: " + err);
+    res.status(500).send({ message: "An error occurred." });
+  }
+});
+
+// here im using Query Params sending the info inside the url
+// looks like that -  (/api/getRolesQueryParams?userId=12345)
+app.get("/api/getRolesQueryParams", async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    console.log(userId);
+
+    var options = {
+      method : "GET",
+      url : ""
+    }
+
+    res.send(true);
+  } catch {
     console.log("Error occurred: " + err);
     res.status(500).send({ message: "An error occurred." });
   }
