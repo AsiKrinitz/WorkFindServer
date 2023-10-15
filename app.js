@@ -62,6 +62,7 @@ app.get("/api/test", (req, res) => {
 app.post("/api/employersJobs", async (req, res) => {
   try {
     let job = req.body;
+    console.log(job);
     let result = await addJob(job);
     console.log(result);
 
