@@ -11,7 +11,7 @@ export const jobSchema = new mongoose.Schema({
   nameOfCompany: String,
   jobOwner: String,
   jobDate: Date,
-  experienceRequired: String,
+  experienceRequired: Boolean,
   jobType: String,
   appliedRequests: [String],
 });

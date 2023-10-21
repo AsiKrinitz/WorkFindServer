@@ -21,8 +21,6 @@ import {
 
 import { getRoles, getRolesWithQueryParams } from "./userRolesService.js";
 
-import axios from "axios";
-
 const app = express();
 const port = 3000;
 
