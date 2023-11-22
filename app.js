@@ -21,8 +21,20 @@ import {
 
 import { getRoles, getRolesWithQueryParams } from "./userRolesService.js";
 
+import * as fs from "fs";
+
+import * as https from "https";
+
 const app = express();
 const port = 3000;
+
+var options = {
+  key: fs.readFileSync("ssl/server.key"),
+  cert: fs.readFileSync("ssl/server.crt"),
+  ca: fs.readFileSync("ssl/ca.crt"),
+};
+
+https.createServer(options, app).listen(port);
 
 // middleware to allow cross origin requests 3001 to 3000
 app.use(cors());
@@ -41,9 +53,9 @@ mongoose
   });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is listening on port ${port}`);
+// });
 
 // Define a route
 // http://localhost:3000
