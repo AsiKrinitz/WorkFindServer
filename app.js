@@ -28,13 +28,13 @@ import * as https from "https";
 const app = express();
 const port = 3000;
 
-var options = {
-  key: fs.readFileSync("ssl/server.key"),
-  cert: fs.readFileSync("ssl/server.crt"),
-  ca: fs.readFileSync("ssl/ca.crt"),
-};
+// var options = {
+//   key: fs.readFileSync("ssl/server.key"),
+//   cert: fs.readFileSync("ssl/server.crt"),
+//   ca: fs.readFileSync("ssl/ca.crt"),
+// };
 
-https.createServer(options, app).listen(port);
+// https.createServer(options, app).listen(port);
 
 // middleware to allow cross origin requests 3001 to 3000
 app.use(cors());
@@ -53,9 +53,9 @@ mongoose
   });
 
 // Start the server
-// app.listen(port, () => {
-//   console.log(`Server is listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
 
 // Define a route
 // http://localhost:3000
@@ -104,8 +104,6 @@ app.post("/api/resume", async (req, res) => {
     let result = await addResume(resume);
     let message = "Resume added successfully!";
     res.send(result);
-
-    console.log(result);
   } catch (error) {
     res.send("you got some error : " + error);
   }
@@ -114,7 +112,6 @@ app.post("/api/resume", async (req, res) => {
 // get all resumes
 app.get("/api/getAllResumes", async (req, res) => {
   let resumes = await getAllResumes();
-  console.log(resumes);
   res.send(resumes);
 });
 
@@ -124,7 +121,6 @@ app.get("/api/getAllResumesFiltered", async (req, res) => {
   // console.log("this is the req.query" + req.query);
   console.log("data send with as parameter " + req.query.userEmail);
   let resumes = await getAllResumesFiltered(userEmail);
-  // console.log(resumes);
   res.send(resumes);
 });
 
@@ -146,8 +142,6 @@ app.get("/api/SubmitToJob", async (req, res) => {
   let userEmail = req.query.email; // Get the email from the query parameter
   let jobId = req.query.jobId;
 
-  // console.log(userEmail + jobId);
-
   const jobDetails = await submitToJob(userEmail, jobId);
 
   console.log(jobDetails);
@@ -167,8 +161,6 @@ app.delete("/api/DeleteJob", async (req, res) => {
 
   const result = await deleteJob(jobId);
 
-  console.log(result);
-
   res.send(result);
 });
 
@@ -176,9 +168,6 @@ app.delete("/api/DeleteJob", async (req, res) => {
 app.put("/api/editResume", async (req, res) => {
   const updatedData = req.body; // Data to update in the resume
   let userEmail = updatedData.userEmail;
-
-  console.log(updatedData);
-  console.log(userEmail);
 
   try {
     const updatedResume = await updateResumeByEmail(userEmail, updatedData);
@@ -196,7 +185,6 @@ app.delete("/api/deleteResume/:userEmail", async (req, res) => {
   try {
     const deletedResume = await deleteResumeByEmail(userEmail);
     if (deletedResume != null) {
-      console.log(deletedResume);
       res.send({ message: "Resume deleted successfully" });
     } else {
       res.status(404).send({ message: "Resume not found" });
@@ -210,7 +198,6 @@ app.delete("/api/deleteResume/:userEmail", async (req, res) => {
 // Get a job by its ID
 app.get("/api/GetJob/:jobId", async (req, res) => {
   const jobId = req.params.jobId;
-  console.log(jobId);
 
   try {
     // Fetch the job by its ID (you can replace this with your actual database query)
