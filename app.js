@@ -19,7 +19,7 @@ import {
   deleteResumeByEmail,
 } from "./resumeService.js";
 
-import { getRoles, getRolesWithQueryParams } from "./userRolesService.js";
+import { getRoles } from "./userRolesService.js";
 
 import * as fs from "fs";
 
