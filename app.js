@@ -250,7 +250,7 @@ app.get("/api/countUserJobs/:userEmail", async (req, res) => {
 // looks like this - (/api/getRoles/12345)
 app.get("/api/getRolesUrlParams/:userId", async (req, res) => {
   const userId = req.params.userId; // Access userId from the URL parameter
-  console.log(userId);
+  // console.log(userId);
 
   try {
     let result = await getRoles(userId); // Use the getRoles function from the service
