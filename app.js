@@ -42,6 +42,11 @@ app.use(cors());
 // middleware to parse json data. by default express does not parse json data
 app.use(express.json());
 
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
+
 // Connect to MongoDB
 mongoose
   .connect("mongodb://127.0.0.1:27017/JobQuestDB")
@@ -51,11 +56,6 @@ mongoose
   .catch((error) => {
     console.log("Error connecting to MongoDB", error);
   });
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
 
 // Define a route
 // http://localhost:3000
