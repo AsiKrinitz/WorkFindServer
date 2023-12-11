@@ -15,7 +15,7 @@ export const getRoles = async (userId) => {
     let response = await axios.request(options);
 
     // this is the answer about the roles from Auth0 - might return the role info in an array or empty array
-    console.log(response.data);
+    // console.log(response.data);
 
     return response.data; // Return the response data
   } catch (ex) {
