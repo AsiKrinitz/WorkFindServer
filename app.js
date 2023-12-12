@@ -99,7 +99,7 @@ app.get("/api/GetAllJobs", async (req, res) => {
 app.post("/api/resume", async (req, res) => {
   try {
     let resume = req.body;
-    console.log(resume);
+    // console.log(resume);
 
     let result = await addResume(resume);
     let message = "Resume added successfully!";
@@ -119,7 +119,7 @@ app.get("/api/getAllResumes", async (req, res) => {
 app.get("/api/getAllResumesFiltered", async (req, res) => {
   let userEmail = req.query.userEmail;
   // console.log("this is the req.query" + req.query);
-  console.log("data send with as parameter " + req.query.userEmail);
+  // console.log("data send with as parameter " + req.query.userEmail);
   let resumes = await getAllResumesFiltered(userEmail);
   res.send(resumes);
 });
@@ -127,7 +127,7 @@ app.get("/api/getAllResumesFiltered", async (req, res) => {
 // check if email already exists in a resume
 app.get("/api/checkExistingResume", async (req, res) => {
   const userEmail = req.query.userEmail;
-  console.log("the user email is: " + userEmail);
+  // console.log("the user email is: " + userEmail);
   const existingResume = await findResumeByEmail(userEmail);
 
   if (existingResume == null) {
@@ -143,8 +143,6 @@ app.get("/api/SubmitToJob", async (req, res) => {
   let jobId = req.query.jobId;
 
   const jobDetails = await submitToJob(userEmail, jobId);
-
-  console.log(jobDetails);
 
   if (jobDetails) {
     res.send(true);
@@ -264,31 +262,14 @@ app.get("/api/getRolesUrlParams/:userId", async (req, res) => {
   }
 });
 
-// here im using Query Params sending the info inside the url
-// looks like that -  (/api/getRolesQueryParams?userId=12345)
-// app.get("/api/getRolesQueryParams", async (req, res) => {
-//   const userId = req.query.userId;
-//   console.log(userId);
-
-//   try {
-//     let result = await getRolesWithQueryParams(userId);
-//     res.status(200).send(result); // Send the response with the roles data
-//     res.end();
-//   } catch (error) {
-//     console.error("Error occurred: " + error);
-//     res.status(500).send({ message: "An error occurred." });
-//     res.end();
-//   }
+// // http://localhost:3000/api/AddName/name
+// app.get("/api/AddName/:userName", (req, res) => {
+//   let userName = req.params.userName;
+//   res.send(userName + " the king");
 // });
 
-// http://localhost:3000/api/AddName/name
-app.get("/api/AddName/:userName", (req, res) => {
-  let userName = req.params.userName;
-  res.send(userName + " the king");
-});
-
-// http://localhost:3000/api/AddAnimal?userAnimal=animal
-app.get("/api/AddAnimal", async (req, res) => {
-  let userAnimal = req.query.userAnimal;
-  res.send(userAnimal + " very good animal !");
-});
+// // http://localhost:3000/api/AddAnimal?userAnimal=animal
+// app.get("/api/AddAnimal", async (req, res) => {
+//   let userAnimal = req.query.userAnimal;
+//   res.send(userAnimal + " very good animal !");
+// });
