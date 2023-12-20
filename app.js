@@ -34,7 +34,12 @@ const port = 3000;
 //   ca: fs.readFileSync("ssl/ca.crt"),
 // };
 
-// https.createServer(options, app).listen(port);
+// Create an HTTPS server using the provided options and the Express app
+// https.createServer(options, app).listen(port, () => {
+//   console.log(
+//     `Server is listening on - https://localhost:${port} and also at - https://127.0.0.1:3000`
+//   );
+// });
 
 // middleware to allow cross origin requests 3001 to 3000
 app.use(cors());
@@ -42,7 +47,7 @@ app.use(cors());
 // middleware to parse json data. by default express does not parse json data
 app.use(express.json());
 
-// Start the server
+// Start the server without ssl http
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
