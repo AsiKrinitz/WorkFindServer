@@ -14,6 +14,7 @@ export const resumeSchema = new mongoose.Schema({
   userDescription: String,
   userSkills: String,
   lastEdit: Date,
+  userIdentityNumber: String,
 });
 
 export const resumeModel = mongoose.model("Resume", resumeSchema);
