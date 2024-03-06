@@ -146,8 +146,11 @@ app.get("/api/checkExistingResume", async (req, res) => {
 app.get("/api/SubmitToJob", async (req, res) => {
   let userEmail = req.query.email; // Get the email from the query parameter
   let jobId = req.query.jobId;
+  let userAnswer = req.query.userAnswer;
 
-  const jobDetails = await submitToJob(userEmail, jobId);
+  
+
+  const jobDetails = await submitToJob(userEmail, jobId,userAnswer);
 
   if (jobDetails) {
     res.send(true);

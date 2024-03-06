@@ -14,6 +14,11 @@ export const jobSchema = new mongoose.Schema({
   experienceRequired: Boolean,
   jobType: String,
   appliedRequests: [String],
+  questionActive: Boolean,
+  questionType: String,
+  question: String,
+  // Add userAnswers field
+  userAnswers: [{ userEmail: String, answer: String }],
 });
 
 export const jobModel = mongoose.model("JobsDetails", jobSchema);
@@ -30,7 +35,7 @@ export const getJobs = async () => {
 };
 
 // submit user to job + check if user already submited
-export const submitToJob = async (userEmail, jobId) => {
+export const submitToJob = async (userEmail, jobId, userAnswer) => {
   try {
     // if exist gets the job details if not get false
     const jobDetails = await checkIfJobExist(jobId);
@@ -44,10 +49,16 @@ export const submitToJob = async (userEmail, jobId) => {
 
       // Job exists, update it with user's email
       jobDetails.appliedRequests.push(userEmail);
+
+      if (userAnswer != "") {
+        // Save user answer
+        jobDetails.userAnswers.push({ userEmail, answer: userAnswer });
+      }
+
       await jobDetails.save();
 
       // Return a success response
-      console.log("Job submission successful for email:", userEmail);
+      console.log("Job submission successful for email: ", userEmail);
       return true;
       // return { message: `Job submission successful for email: ${userEmail}` };
     } else {
