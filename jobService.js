@@ -17,8 +17,8 @@ export const jobSchema = new mongoose.Schema({
   questionActive: Boolean,
   questionType: String,
   question: String,
-  // Add userAnswers field
   userAnswers: [{ userEmail: String, answer: String }],
+  jobArea: String,
 });
 
 export const jobModel = mongoose.model("JobsDetails", jobSchema);
