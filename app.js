@@ -19,7 +19,7 @@ import {
   deleteResumeByEmail,
 } from "./resumeService.js";
 
-import { getRoles } from "./userRolesService.js";
+import { getRoles, giveEmployerRole } from "./userRolesService.js";
 
 import * as fs from "fs";
 
@@ -148,9 +148,7 @@ app.get("/api/SubmitToJob", async (req, res) => {
   let jobId = req.query.jobId;
   let userAnswer = req.query.userAnswer;
 
-  
-
-  const jobDetails = await submitToJob(userEmail, jobId,userAnswer);
+  const jobDetails = await submitToJob(userEmail, jobId, userAnswer);
 
   if (jobDetails) {
     res.send(true);
@@ -270,14 +268,35 @@ app.get("/api/getRolesUrlParams/:userId", async (req, res) => {
   }
 });
 
-// // http://localhost:3000/api/AddName/name
-// app.get("/api/AddName/:userName", (req, res) => {
-//   let userName = req.params.userName;
-//   res.send(userName + " the king");
-// });
+// http://localhost:3000/api/AddName/name
+app.get("/api/AddName/:userName", (req, res) => {
+  let userName = req.params.userName;
+  console.log("the name we got is : " + userName);
+  res.send(userName + " the king");
+});
 
-// // http://localhost:3000/api/AddAnimal?userAnimal=animal
-// app.get("/api/AddAnimal", async (req, res) => {
-//   let userAnimal = req.query.userAnimal;
-//   res.send(userAnimal + " very good animal !");
-// });
+// http://localhost:3000/api/AddAnimal?userAnimal=animal
+app.get("/api/AddAnimal", async (req, res) => {
+  let userAnimal = req.query.userAnimal;
+
+  let test = {
+    animal: userAnimal,
+  };
+  res.send(test);
+});
+
+app.get("/api/AskForRole/:userSub", async (req, res) => {
+  let userSub = req.params.userSub;
+  console.log(userSub);
+
+  try {
+    await giveEmployerRole(userSub);
+
+    res.status(200).json({ message: "Role successfully assigned" });
+    res.end();
+  } catch (error) {
+    console.error("Error occurred: " + error);
+    res.status(500).send({ message: "An error occurred.", error });
+    res.end();
+  }
+});
