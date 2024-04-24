@@ -285,15 +285,24 @@ app.get("/api/AddAnimal", async (req, res) => {
   res.send(test);
 });
 
+// giving Employer Role for the users
 app.get("/api/AskForRole/:userSub", async (req, res) => {
   let userSub = req.params.userSub;
   console.log(userSub);
 
   try {
-    await giveEmployerRole(userSub);
+    let temp = false;
+    temp = await giveEmployerRole(userSub);
 
-    res.status(200).json({ message: "Role successfully assigned" });
-    res.end();
+    console.log(temp);
+
+    if (temp === true) {
+      res.status(200).json(temp);
+      res.end();
+    } else {
+      res.status(200).json(temp);
+      res.end();
+    }
   } catch (error) {
     console.error("Error occurred: " + error);
     res.status(500).send({ message: "An error occurred.", error });
