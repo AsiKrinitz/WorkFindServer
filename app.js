@@ -21,25 +21,25 @@ import {
 
 import { getRoles, giveEmployerRole } from "./userRolesService.js";
 
-import * as fs from "fs";
+// import * as fs from "fs";
 
-import * as https from "https";
+// import * as https from "https";
 
 const app = express();
 const port = 3000;
 
-var options = {
-  key: fs.readFileSync("ssl/server.key"),
-  cert: fs.readFileSync("ssl/server.crt"),
-  ca: fs.readFileSync("ssl/ca.crt"),
-};
+// var options = {
+//   key: fs.readFileSync("ssl/server.key"),
+//   cert: fs.readFileSync("ssl/server.crt"),
+//   ca: fs.readFileSync("ssl/ca.crt"),
+// };
 
 // Create an HTTPS server using the provided options and the Express app
-https.createServer(options, app).listen(port, () => {
-  console.log(
-    `Server is listening on - https://localhost:${port} and also at - https://127.0.0.1:3000`
-  );
-});
+// https.createServer(options, app).listen(port, () => {
+//   console.log(
+//     `Server is listening on - https://localhost:${port} and also at - https://127.0.0.1:3000`
+//   );
+// });
 
 // middleware to allow cross origin requests 3001 to 3000
 app.use(cors());
@@ -48,9 +48,9 @@ app.use(cors());
 app.use(express.json());
 
 // Start the server without ssl http
-// app.listen(port, () => {
-//   console.log(`Server is listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
 
 // Connect to MongoDB
 mongoose
