@@ -21,9 +21,9 @@ import {
 
 import { getRoles, giveEmployerRole } from "./userRolesService.js";
 
-import * as fs from "fs";
+// import * as fs from "fs";
 
-import * as https from "https";
+// import * as https from "https";
 
 const app = express();
 const port = 3000;
